@@ -1,7 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
-    <bean id="date" class="java.util.Date" />
+    <context:annotation-config />
+    <context:component-scan base-package="cn.it.shop" />
+
+    <!--
+        所有的properties文件应该交给Spring管理，而且在启动的时候加载
+        Spring支持两种方式，property-placeholder仅仅在xml中使用，即在beans.xml中获取properties文件中对应的value
+        <context:property-placeholder location="classpath:conn.properties" />与下面的配置等价
+        第二种方式是使用注解的方式注入，主要用在Java代码中使用注解注入properties文件中相应的value值
+    -->
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <array>
+                <value>classpath:conn.properties</value>
+            </array>
+        </property>
+    </bean>
+
+    <bean id="prop" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+        <property name="locations">
+            <array>
+                <value>classpath:public.properties</value>
+                <value>classpath:pay.properties</value>
+            </array>
+        </property>
+    </bean>
+
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="driverClass" value="${driverClass}" />
+        <property name="jdbcUrl" value="${jdbcUrl}" />
+        <property name="user" value="${user}" />
+        <property name="password" value="${password}" />
+    </bean>
+
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="configLocation" value="classpath:hibernate.cfg.xml" />
+    </bean>
+
+    <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <tx:advice id="advice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="save*" propagation="REQUIRED" />
+            <tx:method name="update*" propagation="REQUIRED" />
+            <tx:method name="delete*" propagation="REQUIRED" />
+            <tx:method name="*" propagation="SUPPORTS" />
+        </tx:attributes>
+    </tx:advice>
+
+    <aop:config>
+        <!-- 配置哪些包中的类需要切入事务 -->
+        <aop:pointcut id="pointcut" expression="execution(* cn.it.shop.service.impl.*.*(..))" />
+        <aop:advisor advice-ref="advice" pointcut-ref="pointcut" />
+        <!-- aop:pointcut要写在aop:advisor上面，否则会报错-->
+    </aop:config>
+
 </beans>
