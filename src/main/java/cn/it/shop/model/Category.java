@@ -59,7 +59,7 @@ public class Category implements Serializable {
         this.hot = hot;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "aid")
     public Account getAccount() {
         return account;
