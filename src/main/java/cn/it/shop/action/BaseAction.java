@@ -21,6 +21,32 @@ import java.util.Map;
 @Scope("prototype")
 public class BaseAction<T> extends ActionSupport implements RequestAware, SessionAware, ApplicationAware, ModelDriven<T> {
 
+    // page和rows和分页有关，pageMap存放查询的数据，然后打包成json格式
+    // page和rows实现get和set方法，pageMap只需要实现get方法，因为pageMap不是接收前台数据的，是让struts获取的
+    protected Integer page;
+    protected Integer rows;
+    protected Map<String, Object> pageMap = null;// 让不同action自己去实现
+
+    public Integer getPage() {
+        return page;
+    }
+
+    public void setPage(Integer page) {
+        this.page = page;
+    }
+
+    public Integer getRows() {
+        return rows;
+    }
+
+    public void setRows(Integer rows) {
+        this.rows = rows;
+    }
+
+    public Map<String, Object> getPageMap() {
+        return pageMap;
+    }
+
     // service对象
     @Resource
     protected CategoryService categoryService;

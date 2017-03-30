@@ -5,14 +5,34 @@
         "http://struts.apache.org/dtds/struts-2.3.dtd">
 
 <struts>
-    <package name="shop" extends="struts-default">
+
+    <constant name="struts.devMode" value="true" />
+
+    <package name="shop" extends="json-default">
 
         <!-- 全局result，对这个package中的所有action有效 -->
         <global-results>
             <result name="aindex">/WEB-INF/main/aindex.jsp</result>
         </global-results>
+
+        <!-- class对应Spring配置文件中该Action的id -->
+        <action name="category_*" class="categoryAction" method="{1}">
+            <!-- 必须要先添加json包，然后上面继承json-default -->
+            <result name="jsonMap" type="json">
+                <!-- 要转换成json数据的对象 -->
+                <param name="root">pageMap</param>
+                <!--
+                    配置黑名单，过滤不需要的选项，支持正则表达式
+                    json格式：{total: 3, rows: [{account: {id: 2, login: "user", name: "客服A", pass: "user"}, hot: true, id: 3,...}]}
+                -->
+                <param name="excludeProperties">
+                    <!-- rows[0].account.pass -->
+                    rows\[\d+\]\.account\.pass
+                </param>
+            </result>
+        </action>
         
-        <action name="category_*" class="cn.it.shop.action.CategoryAction" method="{1}">
+        <action name="account_*" class="accountAction" method="{1}">
             <result name="index">/index.jsp</result>
         </action>
 
