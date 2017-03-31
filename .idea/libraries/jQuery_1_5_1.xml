@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="jQuery 1.5.1" type="javaScript">
+    <properties>
+      <option name="frameworkName" value="jQuery" />
+      <option name="frameworkVersion" value="1.5.1" />
+    </properties>
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/src/main/webapp/jquery-easyui-1.5.1/jquery.min.js" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

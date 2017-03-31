@@ -18,4 +18,7 @@ public interface CategoryService extends BaseService<Category> {
 
     // 根据关键字查询总记录数
     Long getCount(String type);
+
+    // 根据ids删除多条记录
+    void deleteByIds(String ids);
 }

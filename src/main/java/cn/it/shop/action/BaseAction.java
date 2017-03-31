@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import javax.annotation.Resource;
+import java.io.InputStream;
 import java.lang.reflect.ParameterizedType;
 import java.util.Map;
 
@@ -20,6 +21,23 @@ import java.util.Map;
 @Controller("baseAction")
 @Scope("prototype")
 public class BaseAction<T> extends ActionSupport implements RequestAware, SessionAware, ApplicationAware, ModelDriven<T> {
+
+    // 获取要删除的ids，要有get和set方法
+    // 流是用来向前台返回数据的，这个数据是让struts获取的，然后通过流的形式传到前台，所以实现get方法即可
+    protected String ids;
+    protected InputStream inputStream;
+
+    public String getIds() {
+        return ids;
+    }
+
+    public void setIds(String ids) {
+        this.ids = ids;
+    }
+
+    public InputStream getInputStream() {
+        return inputStream;
+    }
 
     // page和rows和分页有关，pageMap存放查询的数据，然后打包成json格式
     // page和rows实现get和set方法，pageMap只需要实现get方法，因为pageMap不是接收前台数据的，是让struts获取的

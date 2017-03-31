@@ -30,6 +30,9 @@
                     rows\[\d+\]\.account\.pass
                 </param>
             </result>
+            <result name="stream" type="stream"><!-- 以stream的形式，type为stream -->
+                <param name="inputName">inputStream</param><!-- inputStream中有要传的数据 -->
+            </result>
         </action>
         
         <action name="account_*" class="accountAction" method="{1}">
