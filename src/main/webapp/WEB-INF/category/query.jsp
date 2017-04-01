@@ -27,7 +27,12 @@
                         iconCls: 'icon-add',
                         text: '添加类别',
                         handler: function () {
-                            alert('--添加类别--');
+                            parent.$('#win').window({// 因为<div>放在了aindex.jsp中，所以这里创建窗口要先调用parent
+                                title: '添加类别',
+                                width: 400,
+                                height: 200,
+                                content: '<iframe src="send_category_save.action" frameborder="0" width="100%" height="100%" />'
+                            });
                         }
                     }, '-',
                     {

@@ -13,6 +13,8 @@
         <!-- 全局result，对这个package中的所有action有效 -->
         <global-results>
             <result name="aindex">/WEB-INF/main/aindex.jsp</result>
+            <result name="index">/index.jsp</result>
+            <result name="error">/error.jsp</result>
         </global-results>
 
         <!-- class对应Spring配置文件中该Action的id -->
@@ -36,7 +38,12 @@
         </action>
         
         <action name="account_*" class="accountAction" method="{1}">
-            <result name="index">/index.jsp</result>
+            <result name="jsonList" type="json">
+                <param name="root">jsonList</param>
+                <param name="excludeProperties">
+                    \[\d+\]\.pass, \[\d+\]\.name
+                </param>
+            </result>
         </action>
 
         <!-- 用来完成系统请求转发的action，所有的请求都交给execute -->

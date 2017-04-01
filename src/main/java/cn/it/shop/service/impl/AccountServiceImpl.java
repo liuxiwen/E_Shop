@@ -11,4 +11,5 @@ import org.springframework.stereotype.Service;
 public class AccountServiceImpl extends BaseServiceImpl<Account> implements AccountService {
 
     /* 只要实现AccountService接口中新增的方法即可，公共方法已经在BaseServiceImpl中实现了 */
+
 }

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import javax.annotation.Resource;
 import java.io.InputStream;
 import java.lang.reflect.ParameterizedType;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -21,6 +22,13 @@ import java.util.Map;
 @Controller("baseAction")
 @Scope("prototype")
 public class BaseAction<T> extends ActionSupport implements RequestAware, SessionAware, ApplicationAware, ModelDriven<T> {
+
+    // 封装将要打包成json格式返回给前台的数据，要实现get方法
+    protected List<T> jsonList = null;
+
+    public List<T> getJsonList() {
+        return jsonList;
+    }
 
     // 获取要删除的ids，要有get和set方法
     // 流是用来向前台返回数据的，这个数据是让struts获取的，然后通过流的形式传到前台，所以实现get方法即可
