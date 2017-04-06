@@ -66,7 +66,7 @@
                         <a href="#" title="send_category_query.action">类别管理</a>
                     </li>
                     <li>
-                        <a href="#">商品管理</a>
+                        <a href="#" title="send_product_query.action">商品管理</a>
                     </li>
                 </ul>
             </div>

@@ -2,6 +2,7 @@ package cn.it.shop.action;
 
 import cn.it.shop.service.AccountService;
 import cn.it.shop.service.CategoryService;
+import cn.it.shop.service.ProductService;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import org.apache.struts2.interceptor.ApplicationAware;
@@ -78,6 +79,8 @@ public class BaseAction<T> extends ActionSupport implements RequestAware, Sessio
     protected CategoryService categoryService;
     @Resource
     protected AccountService accountService;
+    @Resource
+    protected ProductService productService;
 
     // 域对象
     protected Map<String, Object> request;

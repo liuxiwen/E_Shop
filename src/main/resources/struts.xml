@@ -46,6 +46,16 @@
             </result>
         </action>
 
+        <action name="product_*" class="productAction" method="{1}">
+            <result name="jsonMap" type="json">
+                <param name="root">pageMap</param>
+                <param name="excludeProperties">
+                    <!-- 把所有account过滤掉，否则会出现懒加载问题 -->
+                    rows\[\d+\]\.category\.account
+                </param>
+            </result>
+        </action>
+
         <!-- 用来完成系统请求转发的action，所有的请求都交给execute -->
         <action name="send_*_*" class="sendAction">
             <result name="send">/WEB-INF/{1}/{2}.jsp</result>
