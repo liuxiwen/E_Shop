@@ -39,8 +39,33 @@
                         iconCls: 'icon-edit',
                         text: '更新类别',
                         handler: function () {
-                            alert('--更新类别--');
-
+                            // 判断是否有选中的行记录，使用getSelections获取选中的所有行
+                            var rows = $('#dg').datagrid("getSelections");
+                            if (rows.length == 0) {
+                                // 弹出提示信息
+                                $.messager.show({// 语法类似于Java中的静态方法，直接对象调用
+                                    title: '错误提示',
+                                    msg: '至少要选择一条记录',
+                                    timeout: 2000,
+                                    showType: 'slide'
+                                });
+                            } else if (rows.length != 1) {
+                                // 弹出提示信息
+                                $.messager.show({// 语法类似于Java中的静态方法，直接对象调用
+                                    title: '错误提示',
+                                    msg: '每次只能更新一条记录',
+                                    timeout: 2000,
+                                    showType: 'slide'
+                                });
+                            } else {
+                                // 弹出更新页面
+                                parent.$('#win').window({
+                                    title: '添加类别',
+                                    width: 400,
+                                    height: 250,
+                                    content: '<iframe src="send_category_update.action" frameborder="0" width="100%" height="100%" />'
+                                });
+                            }
                         }
                     }, '-',
                     {
